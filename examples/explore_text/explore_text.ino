@@ -1,20 +1,21 @@
 /*********************************************************************
 This is an example for our Monochrome OLEDs based on SSD1306 drivers
-
   Pick one up today in the adafruit shop!
   ------> http://www.adafruit.com/category/63_98
-
 This example is for a 128x64 size display using I2C to communicate
 3 pins are required to interface (2 I2C and one reset)
-
 Adafruit invests time and resources providing this open source code, 
 please support Adafruit and open-source hardware by purchasing 
 products from Adafruit!
-
 Written by Limor Fried/Ladyada  for Adafruit Industries.  
 BSD license, check license.txt for more information
 All text above, and the splash screen must be included in any redistribution
 Modified by Dan Peirce B.Sc.
+The code now works like a terminal.
+* text is being sent from Serial Monitor
+* Intent is to have it sent from another MCU
+* This tested on Arduino Uno
+* Intent is to use Adafruit 5V Pro Trinket
 *********************************************************************/
 
 #include <SPI.h>
@@ -72,7 +73,7 @@ void setup()   {
   display.clearDisplay();
 
   // text display tests
-  display.setTextSize(1.5);
+  display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(0,0);
   display.println("Hello, world!");
@@ -87,58 +88,32 @@ void setup()   {
   delay(2000);
   display.clearDisplay();
 
-  display.clearDisplay();
-
-  
-
-  while(1);
-}
-
-
-void loop() {
-  
-}
-
-
-
-void testdrawchar(void) {
-  display.setTextSize(1);
+    display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(0,0);
 
-  for (uint8_t i=0; i < 168; i++) {
-    if (i == '\n') continue;
-    display.write(i);
-    if ((i > 0) && (i % 21 == 0))
-      display.println();
-  }    
-  display.display();
-  delay(1);
 }
 
-
-
-
-void testscrolltext(void) {
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(10,0);
-  display.clearDisplay();
-  display.println("scroll");
-  display.display();
-  delay(1);
- 
-  display.startscrollright(0x00, 0x0F);
-  delay(2000);
-  display.stopscroll();
-  delay(1000);
-  display.startscrollleft(0x00, 0x0F);
-  delay(2000);
-  display.stopscroll();
-  delay(1000);    
-  display.startscrolldiagright(0x00, 0x07);
-  delay(2000);
-  display.startscrolldiagleft(0x00, 0x07);
-  delay(2000);
-  display.stopscroll();
+uint8_t incomingByte;
+void loop() {
+        // send data only when you receive data:
+        if (Serial.available() > 0) {
+                // read the incoming byte:
+                incomingByte = Serial.read();
+                if ( incomingByte == 0x7E)   // using "~"
+                {                            // will change to FF
+                  display.clearDisplay();
+                  display.display();
+                  Serial.println(incomingByte, DEC);
+                  incomingByte = Serial.read();      // serial mon adds LF
+                  Serial.println(incomingByte, DEC);
+                  display.setCursor(0,0);
+                }
+                else
+                {
+                  display.write(incomingByte);
+                  Serial.println(incomingByte, DEC);
+                  display.display();
+                }
+        }  
 }
