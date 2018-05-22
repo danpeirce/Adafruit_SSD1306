@@ -96,19 +96,39 @@ void loop() {
         if (Serial.available() > 0) {
                 // read the incoming byte:
                 incomingByte = Serial.read();
-                if ( incomingByte == 0x7E)   // using "~"
-                {                            // will change to FF
+                if ( incomingByte == 0x0C)   // using "FF" fast foreword ascii code
+                {                            
                   display.clearDisplay();
                   display.display();
-                  Serial.println(incomingByte, DEC);
-                  incomingByte = Serial.read();      // serial mon adds LF
-                  Serial.println(incomingByte, DEC);
                   display.setCursor(0,0);
+                }
+                else if ( incomingByte == 0x11)   // control device 1 -- size 1
+                {                            
+                  display.setTextSize(1);
+                }
+                else if ( incomingByte == 0x12)   // control device 2 -- size 2
+                {                            
+                  display.setTextSize(2);
+                }
+                else if ( incomingByte == 0x13)   //  device control 3 -- size 3
+                {                            
+                  display.setTextSize(3);
+                }
+                else if ( incomingByte == 0x14)   // device control 4 -- size 4
+                {                            
+                  display.setTextSize(4);
+                }
+                else if ( incomingByte == 0x09)   // Landscape Mode
+                {                            
+                  display.setRotation(0);
+                }
+                else if ( incomingByte == 0x0B)   // Portrait Mode
+                {                            
+                  display.setRotation(1);
                 }
                 else
                 {
                   display.write(incomingByte);
-                  Serial.println(incomingByte, DEC);
                   if (incomingByte == '\n') display.display();
                 }
         }
