@@ -10,14 +10,14 @@ void setup() {
 void draw() {
   background(100);
   text(">" , 10, 20);
-  text(key, 15, 20); // Draw "key" at coordinate (10,20)
+  text(key, 20, 20); // Draw "key" at coordinate (10,20)
   text("~ - Clear Screen", 20, 40); // start of Menu
   text("! - Size 1", 20, 55); // 
   text("@ - Size 2", 20, 70); // 
   text("# - Size 3", 20, 85); // 
   text("$ - Size 4", 20, 100); // 
-  text("TAB - Landscape Mode", 20, 115); // 
-  text("^ - Protrait Mode", 20, 130); // end Menu
+  text("TAB or % - Landscape Mode", 20, 115); // 
+  text("^ - Portrait Mode", 20, 130); // end Menu
 }
 
 void keyPressed() {
@@ -34,7 +34,7 @@ void keyPressed() {
     } else if (key == '%') {
       myPort.write(0x09); // Landscape Mode
     } else if (key == '^') {
-      myPort.write(0x0B); // Protrait Mode
+      myPort.write(0x0B); // Portrait Mode
     } else if (key == CODED)
     {
           
