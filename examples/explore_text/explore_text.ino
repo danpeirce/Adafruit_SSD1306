@@ -26,12 +26,6 @@ The code now works like a terminal.
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 
-#define NUMFLAKES 10
-#define XPOS 0
-#define YPOS 1
-#define DELTAY 2
-
-
 #define LOGO16_GLCD_HEIGHT 16 
 #define LOGO16_GLCD_WIDTH  16 
 static const unsigned char PROGMEM logo16_glcd_bmp[] =
@@ -73,28 +67,30 @@ void setup()   {
   display.clearDisplay();
 
   // text display tests
+  display.setRotation(0);
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(0,0);
-  display.println("Hello, world!");
-  display.println();
-  display.setTextSize(2);
+  display.setTextSize(3);
   display.setTextColor(WHITE);
   display.println("KPU");
   display.setTextSize(2);
   display.setTextColor(WHITE);
   display.println("PHYS1600");
+  display.setTextSize(2);
+  display.println("      PMT");  
   display.display();
   delay(2000);
   display.clearDisplay();
 
     display.setTextSize(1);
   display.setTextColor(WHITE);
+
   display.setCursor(0,0);
 
 }
 
-uint8_t incomingByte;
+uint8_t incomingByte, count=1;
 void loop() {
         // send data only when you receive data:
         if (Serial.available() > 0) {
@@ -113,7 +109,8 @@ void loop() {
                 {
                   display.write(incomingByte);
                   Serial.println(incomingByte, DEC);
-                  display.display();
+                  if (incomingByte == '\n') display.display();
                 }
-        }  
+        }
+
 }
