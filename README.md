@@ -30,3 +30,7 @@ STM32F2            |             |             |     X       |
   * ATtiny85 @ 8MHz : Adafruit Gemma, Arduino Gemma, Adafruit Trinket 3V
 
 <!-- END COMPATIBILITY TABLE -->
+
+## Testing Notes
+
+Keeping notes at [https://danpeirce.github.io/2018/oled-v1.2/oled-v1.2.html#new-target-pro-trinket-5v](https://danpeirce.github.io/2018/oled-v1.2/oled-v1.2.html#new-target-pro-trinket-5v)
