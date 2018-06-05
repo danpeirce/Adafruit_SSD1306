@@ -22,8 +22,12 @@ The code now works like a terminal.
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Fonts/FreeSerif9pt7b.h>
 
 #define OLED_RESET 4
+
+void defaultState();
+
 Adafruit_SSD1306 display(OLED_RESET);
 
 #define LOGO16_GLCD_HEIGHT 16 
@@ -70,15 +74,17 @@ void setup()   {
   display.setRotation(0);
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.setCursor(0,0);
-  display.setTextSize(3);
+  display.setCursor(0,9);
+  display.setFont(&FreeSerif9pt7b);
+  display.setTextSize(1);
   display.setTextColor(WHITE);
   display.println("KPU");
-  display.setTextSize(2);
+  display.setTextSize(1);
   display.setTextColor(WHITE);
+  display.setCursor(0,29);
   display.println("PHYS1600");
-  display.setTextSize(2);
-  display.println("      PMT");  
+  display.setTextSize(1);
+  display.println("  PMT");  
   display.display();
   delay(2000);
   display.clearDisplay();
@@ -91,46 +97,58 @@ void setup()   {
 }
 
 uint8_t incomingByte, count=1;
-void loop() {
-        // send data only when you receive data:
-        if (Serial.available() > 0) {
-                // read the incoming byte:
-                incomingByte = Serial.read();
-                if ( incomingByte == 0x0C)   // using "FF" fast foreword ascii code
-                {                            
-                  display.clearDisplay();
-                  display.display();
-                  display.setCursor(0,0);
-                }
-                else if ( incomingByte == 0x11)   // control device 1 -- size 1
-                {                            
-                  display.setTextSize(1);
-                }
-                else if ( incomingByte == 0x12)   // control device 2 -- size 2
-                {                            
-                  display.setTextSize(2);
-                }
-                else if ( incomingByte == 0x13)   //  device control 3 -- size 3
-                {                            
-                  display.setTextSize(3);
-                }
-                else if ( incomingByte == 0x14)   // device control 4 -- size 4
-                {                            
-                  display.setTextSize(4);
-                }
-                else if ( incomingByte == 0x09)   // Landscape Mode
-                {                            
-                  display.setRotation(0);
-                }
-                else if ( incomingByte == 0x0B)   // Portrait Mode
-                {                            
-                  display.setRotation(1);
-                }
-                else
-                {
-                  display.write(incomingByte);
-                  if (incomingByte == '\n') display.display();
-                }
-        }
+
+void (*statePnt)() = defaultState;
+
+void loop() 
+{
+    statePnt(); // additional states will be added
+}
+
+void defaultState()
+{
+      // send data only when you receive data:
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte == 0x0C)   // using "FF" fast foreword ascii code
+          {                            
+            display.clearDisplay();
+            display.display();
+            display.setCursor(0,0);
+          }
+          else if ( incomingByte == 0x11)   // control device 1 -- size 1
+          {                            
+            display.setTextSize(1);
+          }
+          else if ( incomingByte == 0x12)   // control device 2 -- size 2
+          {                            
+            display.setTextSize(2);
+          }
+          else if ( incomingByte == 0x13)   //  device control 3 -- size 3
+          {                            
+            display.setTextSize(3);
+          }
+          else if ( incomingByte == 0x14)   // device control 4 -- size 4
+          {                            
+            display.setTextSize(4);
+          }
+          else if ( incomingByte == 0x09)   // Landscape Mode
+          {                            
+            display.setRotation(0);
+          }
+          else if ( incomingByte == 0x0B)   // Portrait Mode
+          {                            
+            display.setRotation(1);
+          }
+          else
+          {
+            display.write(incomingByte);
+            if (incomingByte == '\n') display.display();
+          }
+    }
 
 }
+
+

@@ -3,7 +3,7 @@ Serial myPort;
 
 void setup() {
   size(230, 270);
-  myPort = new Serial(this, "COM8", 9600);
+  myPort = new Serial(this, "COM9", 9600);
   textSize(10);
 }
 
