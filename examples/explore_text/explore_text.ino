@@ -27,6 +27,9 @@ The code now works like a terminal.
 #define OLED_RESET 4
 
 void defaultState();
+void shiftoutS();
+void xposS();
+void yposS();
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -142,6 +145,10 @@ void defaultState()
           {                            
             display.setRotation(1);
           }
+          else if ( incomingByte == 0x0E)   // Portrait Mode
+          {                            
+            statePnt = shiftoutS;
+          }          
           else
           {
             display.write(incomingByte);
@@ -151,4 +158,77 @@ void defaultState()
 
 }
 
+// Second level to menu added using SO (shcift out ASCII character)
+// This state is entered (transition from default state) if a shift out is recevied.
+// So far this state looks for a back tick to indicate set postion command
+// It is likely that additional controls will be added
+// if the command is not recognized then SO is cancelled and control goes back to 
+// default state.
+void shiftoutS()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte == '`')   // using back tick for set position
+          {                            
+            statePnt = xposS;
+          }
+          else 
+          {                            
+            statePnt = defaultState;
+          }
+    }
+}
 
+
+// xposS is entered if set postion was chosen after SO
+// If the next byte received is 32 dec or more 32 de3c will be subtracted
+// the new valcue is taken as the x position
+unsigned char xposV=0;
+
+void xposS()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte >= 0x20)   // using back tick for set position
+          {
+            xposV = incomingByte - 0x20;                            
+          }
+          else 
+          {                            
+            xposV = incomingByte;
+          }
+          statePnt = yposS;
+    }  
+}
+
+
+// yposS is entered if set postion was chosen after SO
+// and an zposV has already been entered
+// If the next byte received is 32 dec or more 32 de3c will be subtracted
+// the new valcue is taken as the y position
+// once both positons are recieved the cuser postion will be updated
+
+unsigned char yposV=0;
+
+void yposS()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte >= 0x20)   // using back tick for set position
+          {
+            yposV = incomingByte - 0x20;                            
+          }
+          else 
+          {                            
+            yposV = incomingByte;
+          }
+          display.setCursor(xposV,yposV);
+          statePnt~ = defaultState;
+    }  
+}
