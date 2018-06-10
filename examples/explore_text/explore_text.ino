@@ -80,28 +80,20 @@ void setup()   {
   display.clearDisplay();
 
   // text display tests
-  display.setRotation(0);
+  display.setRotation(1);
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.setCursor(0,9);
+  display.setCursor(14,9);
   display.setFont(&FreeSerif9pt7b);
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
   display.println("KPU");
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0,29);
-  display.println("PHYS1600");
-  display.setTextSize(1);
-  display.println("  PMT");  
+  display.setRotation(0);
+  display.setCursor(8,18);
+  display.println("Photogate");
+  display.setCursor(20,35);
+  display.println("Timer");
+  display.drawLine(5, 0, 95, 0, WHITE);
+  display.drawLine(5, 42, 95, 42, WHITE);  
   display.display();
-  delay(2000);
-  display.clearDisplay();
-
-    display.setTextSize(1);
-  display.setTextColor(WHITE);
-
-  display.setCursor(0,0);
 
 }
 
@@ -348,6 +340,5 @@ void yposS()
           statePnt = defaultState;
     }  
 }
-
 
 
