@@ -32,6 +32,10 @@ void xposS();
 void yposS();
 void xposL1S();
 void yposL1S();
+void xposL2S();
+void yposL2S();
+void fontS();
+
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -176,17 +180,30 @@ void shiftoutS()
           {                            
             statePnt = xposS;
           }
-      if ( incomingByte == '-')
-      {
-        statePnt = xposL1S;  // using hyphen for draw line
-      }
-          else 
-          {                            
-            statePnt = defaultState;
+          else if ( incomingByte == '-')
+          {
+            statePnt = xposL1S;  // using hyphen for draw line
           }
+          else if ( incomingByte == 'f')
+          {
+            statePnt = fontS;  // using f for font
+          }          
+          else statePnt = defaultState;
+          
     }
 }
 
+void fontS()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte == '0') display.setFont();                            
+          else if ( incomingByte == '1') display.setFont(&FreeSerif9pt7b);
+          statePnt = defaultState;
+    }  
+}
 
 unsigned char xposV=0, xposV2;
 unsigned char yposV=0, yposV2;
@@ -278,8 +295,8 @@ void yposL2S()
           {                            
             yposV2 = incomingByte;
           }
-      display.drawLine(xposV, yposV, xposV2, yposV2,WHITE);
-      display.display();
+          display.drawLine(xposV, yposV, xposV2, yposV2,WHITE);
+          display.display();
           statePnt = defaultState;
     }  
 }
@@ -331,4 +348,6 @@ void yposS()
           statePnt = defaultState;
     }  
 }
+
+
 

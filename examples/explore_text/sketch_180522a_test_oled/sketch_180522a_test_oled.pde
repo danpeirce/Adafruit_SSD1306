@@ -20,7 +20,10 @@ void draw() {
   text("^ - Portrait Mode", 20, 130); 
   text("& - shift out (codes)", 20, 145);// 
   text("` - enter text x & y position", 25, 160);
-  text("- - draw line x, y, x2, y2", 25, 175); // end Menu
+  text("f - set font", 25, 175);
+  text("0 - internal font", 30, 190);
+  text("1 - Serif font 9pt", 30, 205);
+  text("- - draw line x, y, x2, y2", 25, 220); // end Menu
 }
 
 void keyPressed() {
