@@ -30,6 +30,8 @@ void defaultState();
 void shiftoutS();
 void xposS();
 void yposS();
+void xposL1S();
+void yposL1S();
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -174,6 +176,10 @@ void shiftoutS()
           {                            
             statePnt = xposS;
           }
+      if ( incomingByte == '-')
+      {
+        statePnt = xposL1S;  // using hyphen for draw line
+      }
           else 
           {                            
             statePnt = defaultState;
@@ -182,10 +188,105 @@ void shiftoutS()
 }
 
 
-// xposS is entered if set postion was chosen after SO
-// If the next byte received is 32 dec or more 32 de3c will be subtracted
-// the new valcue is taken as the x position
-unsigned char xposV=0;
+unsigned char xposV=0, xposV2;
+unsigned char yposV=0, yposV2;
+
+// xposL1S is entered if draw line was chosen after SO
+// If the next byte received is 32 dec or more 32 dec will be subtracted
+// the new value is taken as the x position
+
+void xposL1S()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte >= 0x20)   // 
+          {
+            xposV = incomingByte - 0x20;                            
+          }
+          else 
+          {                            
+            xposV = incomingByte;
+          }
+          statePnt = yposL1S;
+    }  
+}
+
+// yposL1S is entered if set position was chosen after SO
+// and an xposV has already been entered
+// If the next byte received is 32 dec or more 32 dec will be subtracted
+// the new value is taken as the y position
+// once both positions are received the curser position will be updated
+
+void yposL1S()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte >= 0x20)   //
+          {
+            yposV = incomingByte - 0x20;                            
+          }
+          else 
+          {                            
+            yposV = incomingByte;
+          }
+          statePnt = xposL2S;
+    }  
+}
+
+// If the next byte received is 32 dec or more 32 dec will be subtracted
+// the new value is taken as the x position
+
+void xposL2S()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte >= 0x20)   // 
+          {
+            xposV2 = incomingByte - 0x20;                            
+          }
+          else 
+          {                            
+            xposV2 = incomingByte;
+          }
+          statePnt = yposL2S;
+    }  
+}
+
+// yposL2S is entered if set position was chosen after SO
+// and an xposV has already been entered
+// If the next byte received is 32 dec or more 32 dec will be subtracted
+// the new value is taken as the y position
+// once both positions are received the curser position will be updated
+
+void yposL2S()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if ( incomingByte >= 0x20)   //
+          {
+            yposV2 = incomingByte - 0x20;                            
+          }
+          else 
+          {                            
+            yposV2 = incomingByte;
+          }
+      display.drawLine(xposV, yposV, xposV2, yposV2,WHITE);
+      display.display();
+          statePnt = defaultState;
+    }  
+}
+
+// xposS is entered if set position was chosen after SO
+// If the next byte received is 32 dec or more 32 dec will be subtracted
+// the new value is taken as the x position
 
 void xposS()
 {
@@ -206,13 +307,11 @@ void xposS()
 }
 
 
-// yposS is entered if set postion was chosen after SO
+// yposS is entered if set position was chosen after SO
 // and an zposV has already been entered
-// If the next byte received is 32 dec or more 32 de3c will be subtracted
-// the new valcue is taken as the y position
-// once both positons are recieved the cuser postion will be updated
-
-unsigned char yposV=0;
+// If the next byte received is 32 dec or more 32 dec will be subtracted
+// the new value is taken as the y position
+// once both positions are received the curser position will be updated
 
 void yposS()
 {
@@ -229,6 +328,7 @@ void yposS()
             yposV = incomingByte;
           }
           display.setCursor(xposV,yposV);
-          statePnt~ = defaultState;
+          statePnt = defaultState;
     }  
 }
+

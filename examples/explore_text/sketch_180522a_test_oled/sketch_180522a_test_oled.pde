@@ -3,7 +3,7 @@ Serial myPort;
 
 void setup() {
   size(230, 270);
-  myPort = new Serial(this, "COM27", 9600);
+  myPort = new Serial(this, "COM9", 9600);
   textSize(10);
 }
 
@@ -19,7 +19,8 @@ void draw() {
   text("TAB or % - Landscape Mode", 20, 115); // 
   text("^ - Portrait Mode", 20, 130); 
   text("& - shift out (codes)", 20, 145);// 
-  text("` - enter x & y position", 25, 160);// end Menu
+  text("` - enter text x & y position", 25, 160);
+  text("- - draw line x, y, x2, y2", 25, 175); // end Menu
 }
 
 void keyPressed() {
