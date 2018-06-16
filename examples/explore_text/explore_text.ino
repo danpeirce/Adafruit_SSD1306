@@ -36,6 +36,7 @@ void xposL2S();
 void yposL2S();
 void fontS();
 
+void showPhotogateTimer();
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -79,22 +80,8 @@ void setup()   {
   // Clear the buffer.
   display.clearDisplay();
 
-  // text display tests
-  display.setRotation(1);
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(14,9);
-  display.setFont(&FreeSerif9pt7b);
-  display.println("KPU");
-  display.setRotation(0);
-  display.setCursor(8,18);
-  display.println("Photogate");
-  display.setCursor(20,35);
-  display.println("Timer");
-  display.drawLine(5, 0, 95, 0, WHITE);
-  display.drawLine(5, 42, 95, 42, WHITE);  
-  display.display();
-
+  showPhotogateTimer();
+  
 }
 
 uint8_t incomingByte, count=1;
@@ -179,7 +166,12 @@ void shiftoutS()
           else if ( incomingByte == 'f')
           {
             statePnt = fontS;  // using f for font
-          }          
+          }
+          else if ( incomingByte == 'p' ) 
+          {
+            showPhotogateTimer();
+            statePnt = defaultState;          
+          }
           else statePnt = defaultState;
           
     }
@@ -342,3 +334,20 @@ void yposS()
 }
 
 
+void showPhotogateTimer()
+{
+  display.setRotation(1);
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(14,9);
+  display.setFont(&FreeSerif9pt7b);
+  display.println("KPU");
+  display.setRotation(0);
+  display.setCursor(8,18);
+  display.println("Photogate");
+  display.setCursor(20,35);
+  display.println("Timer");
+  display.drawLine(5, 0, 95, 0, WHITE);
+  display.drawLine(5, 42, 95, 42, WHITE);  
+  display.display();
+}
