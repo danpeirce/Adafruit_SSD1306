@@ -23,7 +23,8 @@ void draw() {
   text("f - set font", 25, 175);
   text("0 - internal font", 30, 190);
   text("1 - Serif font 9pt", 30, 205);
-  text("- - draw line x, y, x2, y2", 25, 220); // end Menu
+  text("- - draw line x, y, x2, y2", 25, 220); 
+  text("p - draw Phptogate Timer Screen", 25, 235); // end Menu
 }
 
 void keyPressed() {
