@@ -36,6 +36,7 @@ void xposL2S();
 void yposL2S();
 void fontS();
 
+void showPHYS1600();
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -80,25 +81,11 @@ void setup()   {
   display.clearDisplay();
 
   // text display tests
-  display.setRotation(0);
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0,9);
-  display.setFont(&FreeSerif9pt7b);
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.println("KPU");
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0,29);
-  display.println("PHYS1600");
-  display.setTextSize(1);
-  display.println("  PMT");  
-  display.display();
+  showPHYS1600();
   delay(2000);
   display.clearDisplay();
 
-    display.setTextSize(1);
+  display.setTextSize(1);
   display.setTextColor(WHITE);
 
   display.setCursor(0,0);
@@ -349,5 +336,22 @@ void yposS()
     }  
 }
 
-
-
+void showPHYS1600()
+{
+  display.setRotation(0);
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0,9);
+  display.setFont(&FreeSerif9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.println("KPU");
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0,29);
+  display.println("PHYS1600");
+  display.setTextSize(1);
+  display.println("  PMT");  
+  display.display();
+}
+  
