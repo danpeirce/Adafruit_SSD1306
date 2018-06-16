@@ -359,7 +359,7 @@ void showPhotogateTimer()
   display.setRotation(1);
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.setCursor(14,9);
+  display.setCursor(14,12);
   display.setFont(&FreeSerif9pt7b);
   display.println("KPU");
   display.setRotation(0);
