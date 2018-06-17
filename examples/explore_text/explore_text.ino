@@ -173,6 +173,12 @@ void shiftoutS()
             showPhotogateTimer();
             statePnt = defaultState;          
           }
+          else if ( incomingByte == 'r' ) 
+          {
+            display.clearDisplay();
+            showPHYS1600();
+            statePnt = defaultState;          
+          }
           else statePnt = defaultState;
           
     }
@@ -370,4 +376,6 @@ void showPhotogateTimer()
   display.drawLine(5, 42, 95, 42, WHITE);  
   display.display();
 }
+
+
 
