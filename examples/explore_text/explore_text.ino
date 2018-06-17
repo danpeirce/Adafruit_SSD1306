@@ -344,13 +344,13 @@ void showPHYS1600()
   display.setFont(&FreeSerif9pt7b);
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.println("KPU");
+  display.println(F("KPU"));
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(0,29);
-  display.println("PHYS1600");
+  display.println(F("PHYS1600"));
   display.setTextSize(1);
-  display.println("  PMT");  
+  display.println(F("  PMT"));  
   display.display();
 }
   
@@ -361,12 +361,12 @@ void showPhotogateTimer()
   display.setTextColor(WHITE);
   display.setCursor(14,12);
   display.setFont(&FreeSerif9pt7b);
-  display.println("KPU");
+  display.println(F("KPU"));
   display.setRotation(0);
   display.setCursor(8,18);
-  display.println("Photogate");
+  display.println(F("Photogate"));
   display.setCursor(20,35);
-  display.println("Timer");
+  display.println(F("Timer"));
   display.drawLine(5, 0, 95, 0, WHITE);
   display.drawLine(5, 42, 95, 42, WHITE);  
   display.display();
