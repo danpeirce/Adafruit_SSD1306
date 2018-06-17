@@ -337,19 +337,18 @@ void yposS()
 
 void showPHYS1600()
 {
-  display.setRotation(0);
+  display.setRotation(1);
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.setCursor(0,9);
+  display.setCursor(14,12);
   display.setFont(&FreeSerif9pt7b);
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
   display.println(F("KPU"));
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0,29);
+  display.setRotation(0);
+  display.setCursor(8,18);
   display.println(F("PHYS1600"));
-  display.setTextSize(1);
+  display.drawLine(5, 0, 95, 0, WHITE);
+  display.drawLine(5, 42, 95, 42, WHITE);
+  display.setCursor(20,35);
   display.println(F("  PMT"));  
   display.display();
 }
