@@ -35,9 +35,12 @@ void yposL1S();
 void xposL2S();
 void yposL2S();
 void fontS();
+void tttoeS();
 
 void showPHYS1600();
 void showPhotogateTimer();
+void showTictactoe();
+void showLabels();
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -81,7 +84,7 @@ void setup()   {
   // Clear the buffer.
   display.clearDisplay();
 
-  showPHYS1600();
+  showTictactoe();
 
 }
 
@@ -173,15 +176,36 @@ void shiftoutS()
             showPhotogateTimer();
             statePnt = defaultState;          
           }
+      else if ( incomingByte == 't' ) statePnt = tttoeS;          
           else if ( incomingByte == 'r' ) 
           {
             display.clearDisplay();
-            showPHYS1600();
+            showTictactoe();
             statePnt = defaultState;          
           }
           else statePnt = defaultState;
           
     }
+}
+
+void tttoeS()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if      ( incomingByte == '1') display.setCursor(22,15);                            
+          else if ( incomingByte == '2') display.setCursor(52,15);
+          else if ( incomingByte == '3') display.setCursor(79,15);                            
+          else if ( incomingByte == '4') display.setCursor(22,38);                            
+          else if ( incomingByte == '5') display.setCursor(52,38);
+          else if ( incomingByte == '6') display.setCursor(79,38);
+          else if ( incomingByte == '7') display.setCursor(22,58);                            
+          else if ( incomingByte == '8') display.setCursor(52,58);
+          else if ( incomingByte == '9') display.setCursor(79,58);
+          else if ( incomingByte == 's') showLabels();
+          statePnt = defaultState;
+    }  
 }
 
 void fontS()
@@ -358,6 +382,46 @@ void showPHYS1600()
   display.println(F("  PMT"));  
   display.display();
 }
+
+void showTictactoe()
+{
+  display.setRotation(1);
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(14,12);
+  display.setFont(&FreeSerif9pt7b);
+  display.println(F("KPU"));
+  display.setRotation(0);
+  display.drawLine(15, 21, 95, 21, WHITE);
+  display.drawLine(15, 43, 95, 43, WHITE);
+  display.drawLine(42, 0, 42, 63, WHITE);
+  display.drawLine(71, 0, 71, 63, WHITE);
+  display.setCursor(22,15);
+  display.display();
+}
+
+void showLabels()
+{
+          display.setCursor(22,15); 
+          display.print(1);                           
+          display.setCursor(52,15);
+          display.print(2);
+          display.setCursor(79,15);                            
+          display.print(3); 
+          display.setCursor(22,38);                            
+          display.print(4); 
+          display.setCursor(52,38);
+          display.print(5);
+          display.setCursor(79,38);
+          display.print(6);
+          display.setCursor(22,58);                            
+          display.println(7);
+          display.setCursor(52,58);
+          display.print(8);
+          display.setCursor(79,58);
+          display.print(9);
+          display.display();
+}
   
 void showPhotogateTimer()
 {
@@ -376,6 +440,4 @@ void showPhotogateTimer()
   display.drawLine(5, 42, 95, 42, WHITE);  
   display.display();
 }
-
-
 
