@@ -2,7 +2,7 @@ import processing.serial.*;
 Serial myPort; 
 
 void setup() {
-  size(230, 270);
+  size(230, 305);
   myPort = new Serial(this, "COM9", 9600);
   textSize(10);
 }
@@ -25,7 +25,10 @@ void draw() {
   text("1 - Serif font 9pt", 30, 205);
   text("- - draw line x, y, x2, y2", 25, 220); 
   text("p - draw Photogate Timer Screen", 25, 235);
-  text("r - reset to initial screen", 25, 250); // end Menu
+  text("r - reset to initial screen", 25, 250);
+  text("t - Tic Tac Toe", 25, 265);
+  text("s - Show Entry Point Codes", 30, 280);
+  text("1 to 9 - Move entry point", 30, 295); // end Menu
 }
 
 void keyPressed() {

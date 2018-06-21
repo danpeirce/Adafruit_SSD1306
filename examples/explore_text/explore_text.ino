@@ -44,6 +44,26 @@ void showLabels();
 
 Adafruit_SSD1306 display(OLED_RESET);
 
+// Insertion points for tic tac toe Xs nd Os
+#define Xpnt1 22
+#define Ypnt1 15
+#define Xpnt2 52
+#define Ypnt2 15
+#define Xpnt3 79
+#define Ypnt3 15
+#define Xpnt4 22
+#define Ypnt4 38
+#define Xpnt5 52
+#define Ypnt5 38
+#define Xpnt6 79
+#define Ypnt6 38
+#define Xpnt7 22
+#define Ypnt7 58
+#define Xpnt8 52
+#define Ypnt8 58
+#define Xpnt9 79
+#define Ypnt9 58
+
 #define LOGO16_GLCD_HEIGHT 16 
 #define LOGO16_GLCD_WIDTH  16 
 static const unsigned char PROGMEM logo16_glcd_bmp[] =
@@ -176,7 +196,7 @@ void shiftoutS()
             showPhotogateTimer();
             statePnt = defaultState;          
           }
-      else if ( incomingByte == 't' ) statePnt = tttoeS;          
+          else if ( incomingByte == 't' ) statePnt = tttoeS;          
           else if ( incomingByte == 'r' ) 
           {
             display.clearDisplay();
@@ -194,15 +214,15 @@ void tttoeS()
     {
           // read the incoming byte:
           incomingByte = Serial.read();
-          if      ( incomingByte == '1') display.setCursor(22,15);                            
-          else if ( incomingByte == '2') display.setCursor(52,15);
-          else if ( incomingByte == '3') display.setCursor(79,15);                            
-          else if ( incomingByte == '4') display.setCursor(22,38);                            
-          else if ( incomingByte == '5') display.setCursor(52,38);
-          else if ( incomingByte == '6') display.setCursor(79,38);
-          else if ( incomingByte == '7') display.setCursor(22,58);                            
-          else if ( incomingByte == '8') display.setCursor(52,58);
-          else if ( incomingByte == '9') display.setCursor(79,58);
+          if      ( incomingByte == '1') display.setCursor(Xpnt1,Ypnt1);                            
+          else if ( incomingByte == '2') display.setCursor(Xpnt2,Ypnt2);
+          else if ( incomingByte == '3') display.setCursor(Xpnt3,Ypnt3);                            
+          else if ( incomingByte == '4') display.setCursor(Xpnt4,Ypnt4);                            
+          else if ( incomingByte == '5') display.setCursor(Xpnt5,Ypnt5);
+          else if ( incomingByte == '6') display.setCursor(Xpnt6,Ypnt6);
+          else if ( incomingByte == '7') display.setCursor(Xpnt7,Ypnt7);                            
+          else if ( incomingByte == '8') display.setCursor(Xpnt8,Ypnt8);
+          else if ( incomingByte == '9') display.setCursor(Xpnt9,Ypnt9);
           else if ( incomingByte == 's') showLabels();
           statePnt = defaultState;
     }  
@@ -402,23 +422,23 @@ void showTictactoe()
 
 void showLabels()
 {
-          display.setCursor(22,15); 
+          display.setCursor(Xpnt1,Ypnt1); 
           display.print(1);                           
-          display.setCursor(52,15);
+          display.setCursor(Xpnt2,Ypnt2);
           display.print(2);
-          display.setCursor(79,15);                            
+          display.setCursor(Xpnt3,Ypnt3);                            
           display.print(3); 
-          display.setCursor(22,38);                            
+          display.setCursor(Xpnt4,Ypnt4);                            
           display.print(4); 
-          display.setCursor(52,38);
+          display.setCursor(Xpnt5,Ypnt5);
           display.print(5);
-          display.setCursor(79,38);
+          display.setCursor(Xpnt6,Ypnt6);
           display.print(6);
-          display.setCursor(22,58);                            
+          display.setCursor(Xpnt7,Ypnt7);                            
           display.println(7);
-          display.setCursor(52,58);
+          display.setCursor(Xpnt8,Ypnt8);
           display.print(8);
-          display.setCursor(79,58);
+          display.setCursor(Xpnt9,Ypnt9);
           display.print(9);
           display.display();
 }
