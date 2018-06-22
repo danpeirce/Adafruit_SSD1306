@@ -36,11 +36,13 @@ void xposL2S();
 void yposL2S();
 void fontS();
 void tttoeS();
+void tttoeDelS();
 
 void showPHYS1600();
 void showPhotogateTimer();
 void showTictactoe();
 void showLabels();
+void deleteXO(uint16_t xpnt, uint16_t ypnt);
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -233,75 +235,29 @@ void tttoeDelS()
 { 
     if (Serial.available() > 0) 
     {
-          int16_t  x1, y1;
-          uint16_t w, h;
           statePnt = defaultState;
           // read the incoming byte:
           incomingByte = Serial.read();
-          if      ( incomingByte == '1') 
-          { 
-            display.getTextBounds(F("X"), Xpnt1, Ypnt1, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt1,Ypnt1);                            
-          }
-          else if ( incomingByte == '2') 
-          { 
-            display.getTextBounds(F("X"), Xpnt2, Ypnt2, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt2,Ypnt2);                            
-          }
-          else if ( incomingByte == '3')
-          { 
-            display.getTextBounds(F("X"), Xpnt3, Ypnt3, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt3,Ypnt3);                            
-          }                            
-          else if ( incomingByte == '4')
-          { 
-            display.getTextBounds(F("X"), Xpnt4, Ypnt4, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt4,Ypnt4);                 
-          }                            
-          else if ( incomingByte == '5')
-          { 
-            display.getTextBounds(F("X"), Xpnt5, Ypnt5, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt5,Ypnt5);                 
-          }
-          else if ( incomingByte == '6')
-          { 
-            display.getTextBounds(F("X"), Xpnt6, Ypnt6, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt6,Ypnt6);                            
-          }
-          else if ( incomingByte == '7')
-          { 
-            display.getTextBounds(F("X"), Xpnt7, Ypnt7, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt7,Ypnt7);                            
-          }                            
-          else if ( incomingByte == '8') 
-          { 
-            display.getTextBounds(F("X"), Xpnt8, Ypnt8, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt8,Ypnt8);                 
-          }
-          else if ( incomingByte == '9') 
-          { 
-            display.getTextBounds(F("X"), Xpnt9, Ypnt9, &x1, &y1, &w, &h);
-            display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
-            display.display();
-            display.setCursor(Xpnt9,Ypnt9);                 
-          }
+          if      ( incomingByte == '1') deleteXO(Xpnt1, Ypnt1);
+          else if ( incomingByte == '2') deleteXO(Xpnt2, Ypnt2);
+          else if ( incomingByte == '3') deleteXO(Xpnt3, Ypnt3);                            
+          else if ( incomingByte == '4') deleteXO(Xpnt4, Ypnt4);                           
+          else if ( incomingByte == '5') deleteXO(Xpnt5, Ypnt5);
+          else if ( incomingByte == '6') deleteXO(Xpnt6, Ypnt6);
+          else if ( incomingByte == '7') deleteXO(Xpnt7, Ypnt7);                           
+          else if ( incomingByte == '8') deleteXO(Xpnt8, Ypnt8);
+          else if ( incomingByte == '9') deleteXO(Xpnt9, Ypnt9);
     }  
+}
+
+void deleteXO(uint16_t xpnt, uint16_t ypnt)
+{
+    int16_t  x1, y1;
+    uint16_t w, h;
+    display.getTextBounds(F("X"), xpnt, ypnt, &x1, &y1, &w, &h);
+    display.fillRect(x1, y1-1, w, h+1, BLACK); // O is slightl taller than X
+    display.display();
+    display.setCursor(xpnt,ypnt);
 }
 
 void fontS()
