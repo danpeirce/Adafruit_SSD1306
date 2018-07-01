@@ -37,12 +37,14 @@ void yposL2S();
 void fontS();
 void tttoeS();
 void tttoeDelS();
+void windowS();
 
 void showPHYS1600();
 void showPhotogateTimer();
 void showTictactoe();
 void showLabels();
 void deleteXO(uint16_t xpnt, uint16_t ypnt);
+void window2(void);
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -91,7 +93,7 @@ static const unsigned char PROGMEM logo16_glcd_bmp[] =
 #endif
 
 void setup()   {                
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for 3rd party 128x64)
@@ -106,7 +108,7 @@ void setup()   {
   // Clear the buffer.
   display.clearDisplay();
 
-  showTictactoe();
+  showPhotogateTimer();
 
 }
 
@@ -202,12 +204,31 @@ void shiftoutS()
           else if ( incomingByte == 'r' ) 
           {
             display.clearDisplay();
-            showTictactoe();
+            showPhotogateTimer();
             statePnt = defaultState;          
           }
+          else if (incomingByte == 'w' ) statePnt = windowS;
           else statePnt = defaultState;
           
     }
+}
+
+void windowS()
+{
+    if (Serial.available() > 0) 
+    {
+          // read the incoming byte:
+          incomingByte = Serial.read();
+          if      ( incomingByte == '2') window2();                            
+          statePnt = defaultState;
+    }  
+}
+
+void window2(void)
+{
+  display.fillRect(5, 43, 90, 22, BLACK); // clear window2
+  //display.display();
+  display.setCursor(6,62);
 }
 
 void tttoeS()
